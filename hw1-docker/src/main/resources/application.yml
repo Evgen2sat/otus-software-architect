@@ -1,0 +1,3 @@
+micronaut:
+  application:
+    name: hw1-docker
