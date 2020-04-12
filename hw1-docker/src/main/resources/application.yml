@@ -2,4 +2,4 @@ micronaut:
   application:
     name: hw1-docker
   server:
-    port: 8086
+    port: 8000
