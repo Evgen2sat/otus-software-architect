@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: otus-hw2-k8s-deployment
+spec:
+    replicas: 3
+    selector:
+       matchLabels:
+          app: otus-hw2-k8s-app
+    template:
+       metadata:
+          labels:
+             app: otus-hw2-k8s-app
+       spec:
+          containers:
+          - name: otus-hw2-k8s
+            image: evgen2sat/otus-hw1-docker:1.0.1
+            ports:
+              - name: web 
+                containerPort: 8000
+            livenessProbe:
+              httpGet:
+                port: 8000
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 2
+            readinessProbe:
+              httpGet:
+                port: 8000
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5
