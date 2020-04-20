@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw3.postgres
+---
+testFramework: junit
+sourceLanguage: java
