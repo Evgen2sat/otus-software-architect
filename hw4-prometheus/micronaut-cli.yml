@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw4.prometheus
+---
+testFramework: junit
+sourceLanguage: java

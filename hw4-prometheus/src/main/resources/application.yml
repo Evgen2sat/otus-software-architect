@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: hw3-prometeus
+  server:
+    port: 8000
