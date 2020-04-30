@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: otus-hw3-postgres-service
+  name: otus-hw4-prometheus-service
 spec:
   selector:
-    app: otus-hw3-postgres-app
+    app: otus-hw4-prometheus-app
   ports:
     - protocol: TCP
       port: 9000

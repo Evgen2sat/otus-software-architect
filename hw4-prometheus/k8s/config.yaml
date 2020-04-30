@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: otus-hw3-postgres-secret
+  name: otus-hw4-prometheus-secret
 type: Opaque
 data:
   JDBC_DRIVER_CLASS_NAME: b3JnLnBvc3RncmVzcWwuRHJpdmVy

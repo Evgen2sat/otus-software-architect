@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: otus-hw3-postgres-deployment
+    name: otus-hw4-prometheus-deployment
 spec:
-    replicas: 3
+    replicas: 1
     selector:
        matchLabels:
-          app: otus-hw3-postgres-app
+          app: otus-hw4-prometheus-app
     template:
        metadata:
           labels:
-             app: otus-hw3-postgres-app
+             app: otus-hw4-prometheus-app
        spec:
           containers:
-          - name: otus-hw3-postgres
-            image: evgen2sat/otus-hw3-postgres:1.0.4
+          - name: otus-hw4-prometheus
+            image: evgen2sat/otus-hw4-prometheus:1.0.0
             ports:
               - name: web 
                 containerPort: 8000
@@ -22,22 +22,22 @@ spec:
               - name: JDBC_DRIVER_CLASS_NAME
                 valueFrom:
                     secretKeyRef:
-                        name: otus-hw3-postgres-secret
+                        name: otus-hw4-prometheus-secret
                         key: JDBC_DRIVER_CLASS_NAME
               - name: JDBC_URL
                 valueFrom:
                     secretKeyRef:
-                        name: otus-hw3-postgres-secret
+                        name: otus-hw4-prometheus-secret
                         key: JDBC_URL
               - name: JDBC_USER
                 valueFrom:
                     secretKeyRef:
-                        name: otus-hw3-postgres-secret
+                        name: otus-hw4-prometheus-secret
                         key: JDBC_USER
               - name: JDBC_PASSWORD
                 valueFrom:
                     secretKeyRef:
-                        name: otus-hw3-postgres-secret
+                        name: otus-hw4-prometheus-secret
                         key: JDBC_PASSWORD
             livenessProbe:
               httpGet:

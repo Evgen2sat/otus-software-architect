@@ -1,11 +1,11 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: otus-hw3-postgres-initdb
+  name: otus-hw4-prometheus-initdb
 spec:
   template:
     metadata:
-      name: otus-hw3-postgres-initdb
+      name: otus-hw4-prometheus-initdb
     spec:
       restartPolicy: Never
       containers:

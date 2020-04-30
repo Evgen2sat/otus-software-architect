@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: otus-hw3-postgres-ingress
+  name: otus-hw4-prometheus-ingress
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
@@ -11,5 +11,5 @@ spec:
       paths:
       - path: /otusapp(/|$)(.*)
         backend:
-          serviceName: otus-hw3-postgres-service
+          serviceName: otus-hw4-prometheus-service
           servicePort: 9000
