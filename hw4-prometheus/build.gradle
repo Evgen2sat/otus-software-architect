@@ -46,6 +46,9 @@ dependencies {
     runtime "ch.qos.logback:logback-classic:1.2.3"
     implementation group: 'org.vibur', name: 'vibur-dbcp', version: '22.2'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+    compile "io.micronaut.configuration:micronaut-micrometer-core"
+    compile "io.micronaut.configuration:micronaut-micrometer-registry-prometheus"
+    compile "io.micronaut:micronaut-management"
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testCompile "org.junit.jupiter:junit-jupiter-api"
     testCompile "io.micronaut.test:micronaut-test-junit5"
