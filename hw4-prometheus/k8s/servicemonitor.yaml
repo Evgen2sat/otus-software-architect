@@ -1,6 +1,8 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  labels:
+    k8s-app: otus-hw4-prometheus-monitoring
   name: otus-hw4-prometheus-monitoring
 spec:
   selector:
@@ -9,4 +11,4 @@ spec:
   endpoints:
   - interval: 15s
     port: web
-    path: /prometheus  
+    path: /prometheus

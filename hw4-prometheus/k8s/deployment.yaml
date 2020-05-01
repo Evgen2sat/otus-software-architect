@@ -1,9 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: otus-hw4-prometheus-deployment
+  labels:
+    app: otus-hw4-prometheus-app
+  name: otus-hw4-prometheus-deployment
 spec:
-    replicas: 1
+    replicas: 3
     selector:
        matchLabels:
           app: otus-hw4-prometheus-app
