@@ -16,7 +16,7 @@ spec:
        spec:
           containers:
           - name: otus-hw4-prometheus
-            image: evgen2sat/otus-hw4-prometheus:1.0.1
+            image: evgen2sat/otus-hw4-prometheus:1.0.2
             ports:
               - name: web 
                 containerPort: 8000
