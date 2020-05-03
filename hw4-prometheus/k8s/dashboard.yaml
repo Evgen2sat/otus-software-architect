@@ -558,7 +558,7 @@ data:
               "refId": "D"
             },
             {
-              "expr": "histogram_quantile(+Inf,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
+              "expr": "histogram_quantile(1,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -570,13 +570,14 @@ data:
               "fill": true,
               "line": true,
               "op": "gt",
-              "value": 1
+              "value": 1,
+              "yaxis": "left"
             }
           ],
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "LATENCY BY ENDPOINTS (0.5, 0.95, 0.99. +Inf)",
+          "title": "LATENCY BY ENDPOINTS (0.5, 0.95, 0.99. 1)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -707,7 +708,7 @@ data:
               "refId": "C"
             },
             {
-              "expr": "histogram_quantile(+Inf,\r\nsum by (le)\r\n(rate(nginx_ingress_controller_response_duration_seconds_bucket[1m]))\r\n) * 1000",
+              "expr": "histogram_quantile(1,\r\nsum by (le)\r\n(rate(nginx_ingress_controller_response_duration_seconds_bucket[1m]))\r\n) * 1000",
               "interval": "",
               "legendFormat": "",
               "refId": "D"
@@ -725,7 +726,7 @@ data:
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "LATENCY BY INGRESS (0.5, 0.95, 0.99, +Inf)",
+          "title": "LATENCY BY INGRESS (0.5, 0.95, 0.99, 1)",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -780,5 +781,5 @@ data:
       "variables": {
         "list": []
       },
-      "version": 21
+      "version": 1
     }

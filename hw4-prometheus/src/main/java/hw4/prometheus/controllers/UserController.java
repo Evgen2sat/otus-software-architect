@@ -10,6 +10,7 @@ import io.micronaut.http.annotation.*;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
+import java.time.Duration;
 
 @Controller("/users")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -33,6 +34,9 @@ public class UserController {
                 .tag("method", "POST")
                 .tag("endpoint", "/users")
                 .publishPercentileHistogram()
+                .sla(Duration.ofMillis(100))
+                .minimumExpectedValue(Duration.ofMillis(1))
+                .maximumExpectedValue(Duration.ofSeconds(10))
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
@@ -49,8 +53,12 @@ public class UserController {
         return Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "UPDATE")
-                .tag("endpoint", "/" + id)
+//                .tag("endpoint", "/" + id)
+                .tag("endpoint", "/users")
                 .publishPercentileHistogram()
+                .sla(Duration.ofMillis(100))
+                .minimumExpectedValue(Duration.ofMillis(1))
+                .maximumExpectedValue(Duration.ofSeconds(10))
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
@@ -67,8 +75,12 @@ public class UserController {
         return Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "GET")
-                .tag("endpoint", "/" + id)
+//                .tag("endpoint", "/" + id)
+                .tag("endpoint", "/users")
                 .publishPercentileHistogram()
+                .sla(Duration.ofMillis(100))
+                .minimumExpectedValue(Duration.ofMillis(1))
+                .maximumExpectedValue(Duration.ofSeconds(10))
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
@@ -85,8 +97,12 @@ public class UserController {
         Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "DELETE")
-                .tag("endpoint", "/" + id)
+//                .tag("endpoint", "/" + id)
+                .tag("endpoint", "/users")
                 .publishPercentileHistogram()
+                .sla(Duration.ofMillis(100))
+                .minimumExpectedValue(Duration.ofMillis(1))
+                .maximumExpectedValue(Duration.ofSeconds(10))
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {

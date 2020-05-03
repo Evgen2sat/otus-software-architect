@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: otus-hw4-prometheus-app
+  name: otus-hw4-prometheus-stresstest
+spec:
+  template:
+    metadata:
+      name: otus-hw4-prometheus-stresstest
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: stress-test-job
+        env:
+          - name: SERVICE_URI
+            value: "http://nginx-nginx-ingress-controller:80/"
+        image: evgen2sat/otus-hw4-prometheus-stresstest:1.0.3
+  backoffLimit: 0
