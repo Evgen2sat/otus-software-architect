@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @Put("/{id}")
-    public UserDto create(long id, @Body UserDto user) throws SQLException {
+    public UserDto update(long id, @Body UserDto user) throws SQLException {
         return Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "UPDATE")
