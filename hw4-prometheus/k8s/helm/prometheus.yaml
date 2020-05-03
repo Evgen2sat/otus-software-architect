@@ -3,6 +3,6 @@ prometheus:
     serviceMonitorSelectorNilUsesHelmValues: false
     serviceMonitorSelector: {}
 grafana:
- dashboards:
- enabled: true
- label: grafana-dashboard
+  dashboards:
+    enabled: true
+    label: grafana_dashboard
