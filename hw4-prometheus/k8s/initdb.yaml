@@ -3,11 +3,12 @@ kind: Job
 metadata:
   name: otus-hw4-prometheus-initdb
 spec:
+  activeDeadlineSeconds: 120
   template:
     metadata:
       name: otus-hw4-prometheus-initdb
     spec:
-      restartPolicy: Never
+      restartPolicy: OnFailure
       containers:
       - name: post-install-job
         env:
@@ -27,4 +28,4 @@ spec:
                     deleted boolean default false not null
                 );
             EOF
-  backoffLimit: 0
+  backoffLimit: 5
