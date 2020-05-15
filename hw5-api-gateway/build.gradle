@@ -7,7 +7,13 @@ plugins {
     id "application"
 }
 
+apply plugin:"application"
+apply plugin:"java"
 
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+sourceCompatibility = 1.8
 
 version "0.1"
 group "hw5.api.gateway"
@@ -37,6 +43,8 @@ dependencies {
     compile "io.micronaut:micronaut-http-client"
     compile "io.micronaut:micronaut-http-server-netty"
     runtime "ch.qos.logback:logback-classic:1.2.3"
+    implementation group: 'org.vibur', name: 'vibur-dbcp', version: '22.2'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
     testAnnotationProcessor "io.micronaut:micronaut-inject-java"
     testCompile "org.junit.jupiter:junit-jupiter-api"
     testCompile "io.micronaut.test:micronaut-test-junit5"
