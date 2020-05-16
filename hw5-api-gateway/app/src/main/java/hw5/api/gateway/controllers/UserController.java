@@ -7,6 +7,8 @@ import hw5.api.gateway.repositories.UserRepository;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
 import io.micronaut.http.HttpHeaders;
+import io.micronaut.http.HttpResponse;
+import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 
@@ -29,36 +31,8 @@ public class UserController {
     @Inject
     private UserRepository userRepository;
 
-    @Get("/me")
-    public UserDto getMe(final HttpHeaders headers) throws Exception {
-        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
-        long id = claimsJws.getLongClaim("id");
-
-        return get(id);
-    }
-
-    @Post
-    public UserDto create(@Body UserDto user) throws SQLException {
-        return Timer.builder("app_request_latency")
-                .description("Application Request Latency")
-                .tag("method", "POST")
-                .tag("endpoint", "/users")
-                .publishPercentileHistogram()
-                .sla(Duration.ofMillis(100))
-                .minimumExpectedValue(Duration.ofMillis(1))
-                .maximumExpectedValue(Duration.ofSeconds(10))
-                .register(this.meterRegistry)
-                .record(() -> {
-                    try {
-                        return userRepository.create(user);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-    }
-
     @Put("/{id}")
-    public UserDto update(long id, @Body UserDto user) throws SQLException {
+    public HttpResponse update(long id, @Body UserDto user, final HttpHeaders headers) throws Exception {
         return Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "UPDATE")
@@ -71,15 +45,21 @@ public class UserController {
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
-                        return userRepository.update(id, user);
-                    } catch (SQLException e) {
+                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+                        long userIdFromJwt = claimsJws.getLongClaim("id");
+                        if(userIdFromJwt != id) {
+                            return HttpResponse.status(HttpStatus.FORBIDDEN);
+                        }
+
+                        return HttpResponse.ok(userRepository.update(id, user));
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });
     }
 
     @Get("/{id}")
-    public UserDto get(long id) throws SQLException {
+    public HttpResponse get(long id, final HttpHeaders headers) throws Exception {
         return Timer.builder("app_request_latency")
                 .description("Application Request Latency")
                 .tag("method", "GET")
@@ -92,29 +72,14 @@ public class UserController {
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
-                        return userRepository.get(id);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-    }
+                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+                        long userIdFromJwt = claimsJws.getLongClaim("id");
+                        if(userIdFromJwt != id) {
+                            return HttpResponse.status(HttpStatus.FORBIDDEN);
+                        }
 
-    @Delete("/{id}")
-    public void delete(long id) throws SQLException {
-        Timer.builder("app_request_latency")
-                .description("Application Request Latency")
-                .tag("method", "DELETE")
-//                .tag("endpoint", "/" + id)
-                .tag("endpoint", "/users")
-                .publishPercentileHistogram()
-                .sla(Duration.ofMillis(100))
-                .minimumExpectedValue(Duration.ofMillis(1))
-                .maximumExpectedValue(Duration.ofSeconds(10))
-                .register(this.meterRegistry)
-                .record(() -> {
-                    try {
-                        userRepository.delete(id);
-                    } catch (SQLException e) {
+                        return HttpResponse.ok(userRepository.get(id));
+                    } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
                 });

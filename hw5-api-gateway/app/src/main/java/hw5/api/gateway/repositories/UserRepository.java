@@ -18,20 +18,6 @@ public class UserRepository {
         this.databaseService = new DatabaseService();
     }
 
-    public UserDto create(UserDto userDto) throws SQLException {
-        long userId = databaseService.executeInsertQueryWithId(
-                "INSERT INTO users\n" +
-                        "(last_name, first_name, middle_name)\n" +
-                        "VALUES\n" +
-                        "(?, ?, ?)\n",
-                QueryParam.getString(userDto.getLastName()),
-                QueryParam.getString(userDto.getFirstName()),
-                (userDto.getMiddleName() != null && !userDto.getMiddleName().isEmpty() ? QueryParam.getString(userDto.getFirstName()) : QueryParam.getStringNull())
-        );
-
-        return get(userId);
-    }
-
     public UserDto update(long id, UserDto userDto) throws SQLException {
         databaseService.executeInsertQuery(
                 "UPDATE users\n" +
@@ -51,7 +37,7 @@ public class UserRepository {
 
     public UserDto get(long userId) throws SQLException {
         List<UserDto> users = databaseService.executeSelectQuery(
-                "SELECT id, last_name, first_name, middle_name\n" +
+                "SELECT id, username, last_name, first_name, middle_name\n" +
                         "FROM users\n" +
                         "WHERE id = ?\n" +
                         "   AND deleted = FALSE",
@@ -66,16 +52,6 @@ public class UserRepository {
         return null;
     }
 
-    public void delete(long id) throws SQLException {
-        databaseService.executeInsertQuery(
-                "UPDATE users\n" +
-                        "SET\n" +
-                        "   deleted = TRUE\n" +
-                        "WHERE id = ?",
-                QueryParam.getLong(id)
-        );
-    }
-
     private UserDto userMapper(ResultSet rs) {
         try {
             UserDto userDto = new UserDto();
@@ -83,6 +59,7 @@ public class UserRepository {
             userDto.setLastName(rs.getString("last_name"));
             userDto.setFirstName(rs.getString("first_name"));
             userDto.setMiddleName(rs.getString("middle_name"));
+            userDto.setUsername(rs.getString("username"));
 
             return userDto;
         } catch (Exception e) {
