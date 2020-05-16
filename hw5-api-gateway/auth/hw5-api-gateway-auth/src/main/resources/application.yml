@@ -2,7 +2,7 @@ micronaut:
   application:
     name: hw5-api-gateway-auth
   server:
-    port: 9001
+    port: 8001
   security:
     enabled: true
     token:
