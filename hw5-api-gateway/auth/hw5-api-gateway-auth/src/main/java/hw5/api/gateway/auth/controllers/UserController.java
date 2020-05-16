@@ -27,7 +27,6 @@ public class UserController {
 
     @Post("/signup")
     public HttpResponse singUp(SignUpDto data) {
-        return HttpResponse.ok(data.getUsername() + " " + data.getPassword() + " " + data.getLastName() + " " +
-                data.getFirstName() + " " + data.getMiddleName());
+        return userService.signUp(data);
     }
 }

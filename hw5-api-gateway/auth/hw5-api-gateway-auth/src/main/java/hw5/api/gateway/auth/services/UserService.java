@@ -15,6 +15,7 @@ import io.micronaut.http.HttpResponse;
 import javax.crypto.SecretKey;
 import javax.inject.Inject;
 import javax.inject.Singleton;
+import java.sql.SQLException;
 
 @Singleton
 public class UserService {
@@ -25,22 +26,39 @@ public class UserService {
     private UserRepository userRepository;
 
     public HttpResponse signIn(SignInDto data) {
-        UserDto userDto = userRepository.signIn(data);
+        UserDto userDto = null;
+        try {
+            userDto = userRepository.signIn(data);
+            if(userDto == null) {
+                return HttpResponse.badRequest("user not found");
+            }
+        } catch (SQLException e) {
+            return HttpResponse.serverError(e);
+        }
 
         return HttpResponse.ok(createJwt(userDto));
     }
 
     public HttpResponse signUp(SignUpDto data) {
         //проверить наличие пользователя с данным логином
-        Long userId = userRepository.getUserByUsername(data.getUsername());
+        UserDto existUser = null;
+        try {
+            existUser = userRepository.getUserByUsername(data.getUsername());
+        } catch (SQLException e) {
+            return HttpResponse.serverError(e);
+        }
 
         //если есть, то вернуть ошибку
-        if (userId != null) {
+        if (existUser != null) {
             return HttpResponse.badRequest("username already exist");
         }
 
         //регистрируем пользователя
-        userRepository.signUp(data);
+        try {
+            userRepository.signUp(data);
+        } catch (SQLException e) {
+            return HttpResponse.serverError(e);
+        }
 
         return HttpResponse.ok();
     }
