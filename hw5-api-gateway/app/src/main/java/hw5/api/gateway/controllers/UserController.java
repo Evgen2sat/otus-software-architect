@@ -1,20 +1,23 @@
 package hw5.api.gateway.controllers;
 
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
 import hw5.api.gateway.dto.UserDto;
 import hw5.api.gateway.repositories.UserRepository;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 
 import javax.inject.Inject;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.time.Duration;
 
 @Controller("/users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-//@Timed(value = "app_request_latency", extraTags = {"test1", "test2"}, histogram = true, description = "Application Request Latency")
 public class UserController {
 
     private MeterRegistry meterRegistry;
@@ -25,6 +28,14 @@ public class UserController {
 
     @Inject
     private UserRepository userRepository;
+
+    @Get("/me")
+    public UserDto getMe(final HttpHeaders headers) throws Exception {
+        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+        long id = claimsJws.getLongClaim("id");
+
+        return get(id);
+    }
 
     @Post
     public UserDto create(@Body UserDto user) throws SQLException {
@@ -44,7 +55,6 @@ public class UserController {
                         throw new RuntimeException(e);
                     }
                 });
-//        return userRepository.create(user);
     }
 
     @Put("/{id}")
@@ -66,7 +76,6 @@ public class UserController {
                         throw new RuntimeException(e);
                     }
                 });
-//        return userRepository.update(id, user);
     }
 
     @Get("/{id}")
@@ -88,7 +97,6 @@ public class UserController {
                         throw new RuntimeException(e);
                     }
                 });
-//        return userRepository.get(id);
     }
 
     @Delete("/{id}")
@@ -110,6 +118,5 @@ public class UserController {
                         throw new RuntimeException(e);
                     }
                 });
-//        userRepository.delete(id);
     }
 }

@@ -46,6 +46,7 @@ dependencies {
     runtime "ch.qos.logback:logback-classic:1.2.3"
     implementation group: 'org.vibur', name: 'vibur-dbcp', version: '22.2'
     implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.5'
+    implementation "io.micronaut:micronaut-security-jwt"
     compile "io.micronaut.configuration:micronaut-micrometer-core"
     compile "io.micronaut.configuration:micronaut-micrometer-registry-prometheus"
     compile "io.micronaut:micronaut-management"
