@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: otus-hw5-api-gateway-initdb
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      name: otus-hw5-api-gateway-initdb
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+        image: postgres:latest
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+              create table users (id bigserial not null constraint users_pk primary key,
+                    last_name   text                    not null,
+                    first_name     text                    not null,
+                    middle_name text                    null,
+                    username text                    not null,
+                    password text                    not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                );
+            EOF
+  backoffLimit: 5

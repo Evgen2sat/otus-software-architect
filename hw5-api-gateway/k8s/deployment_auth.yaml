@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: otus-hw5-api-gateway-auth
+  name: otus-hw5-api-gateway-auth-deployment
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: otus-hw5-api-gateway-app
+    template:
+       metadata:
+          labels:
+             app: otus-hw5-api-gateway-app
+       spec:
+          containers:
+          - name: otus-hw5-api-gateway-auth
+            image: evgen2sat/otus-hw5-api-gateway-auth:1.0.0
+            ports:
+              - name: web 
+                containerPort: 8001
+            env:
+              - name: JDBC_DRIVER_CLASS_NAME
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw5-api-gateway-secret
+                        key: JDBC_DRIVER_CLASS_NAME
+              - name: JDBC_URL
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw5-api-gateway-secret
+                        key: JDBC_URL
+              - name: JDBC_USER
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw5-api-gateway-secret
+                        key: JDBC_USER
+              - name: JDBC_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw5-api-gateway-secret
+                        key: JDBC_PASSWORD
