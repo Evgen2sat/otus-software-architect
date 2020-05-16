@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw5.api.gateway.auth
+---
+testFramework: junit
+sourceLanguage: java
