@@ -1,0 +1,596 @@
+{
+	"info": {
+		"_postman_id": "e7f14771-5490-4b23-8a71-7867ef62b9f1",
+		"name": "otus-hw-5-api-gateway",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "регистрация 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e5b89c07-cf9e-4e10-9ce2-726a5e2f3326",
+						"exec": [
+							"pm.collectionVariables.set(\"username1\", pm.variables.replaceIn('{{$randomUserName}}'))\r",
+							"pm.collectionVariables.set(\"password1\", pm.variables.replaceIn('{{$randomPassword}}'))\r",
+							"pm.collectionVariables.set(\"lastName1\", pm.variables.replaceIn('{{$randomLastName}}'))\r",
+							"pm.collectionVariables.set(\"firstName1\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							"pm.collectionVariables.set(\"middleName1\", pm.variables.replaceIn('{{$randomNamePrefix}}'))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "bbc771c4-ae0b-42da-a8e2-95869b4e0fa1",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)\r",
+							"pm.collectionVariables.set(\"jwt\", null)\r",
+							"pm.collectionVariables.set(\"userId1\", responseJSON[\"id\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"{{username1}}\",\n\t\"password\" : \"{{password1}}\",\n\t\"lastName\" : \"{{lastName1}}\",\n\t\"firstName\" : \"{{firstName1}}\",\n\t\"middleName\" : \"{{middleName1}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/signup",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение профиля без входа 1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "редактирование профиля без входа 1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lastName\" : \"{{lastName1}} changed\",\n\t\"firstName\" : \"{{firstName1}} changed\",\n\t\"middleName\" : \"{{middleName1}} changed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "вход пользователя 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "84782933-5500-4af4-9231-2b28508e58f0",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)\r",
+							"pm.collectionVariables.set(\"jwt\", responseJSON[\"jwt\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"{{username1}}\",\n\t\"password\" : \"{{password1}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/signin",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "изменение профиля пользователя 1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lastName\" : \"{{lastName1}} changed\",\n\t\"firstName\" : \"{{firstName1}} changed\",\n\t\"middleName\" : \"{{middleName1}} changed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение профиля пользователя 1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "регистрация 2",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e64924ea-30b8-4a4e-96fe-66e64cd2f954",
+						"exec": [
+							"pm.collectionVariables.set(\"username2\", pm.variables.replaceIn('{{$randomUserName}}'))\r",
+							"pm.collectionVariables.set(\"password2\", pm.variables.replaceIn('{{$randomPassword}}'))\r",
+							"pm.collectionVariables.set(\"lastName2\", pm.variables.replaceIn('{{$randomLastName}}'))\r",
+							"pm.collectionVariables.set(\"firstName2\", pm.variables.replaceIn('{{$randomFirstName}}'))\r",
+							"pm.collectionVariables.set(\"middleName2\", pm.variables.replaceIn('{{$randomNamePrefix}}'))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "13ac2226-94a5-4b73-8375-90490f6a1215",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)\r",
+							"pm.collectionVariables.set(\"jwt\", null)\r",
+							"pm.collectionVariables.set(\"userId2\", responseJSON[\"id\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"{{username2}}\",\n\t\"password\" : \"{{password2}}\",\n\t\"lastName\" : \"{{lastName2}}\",\n\t\"firstName\" : \"{{firstName2}}\",\n\t\"middleName\" : \"{{middleName2}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/signup",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "вход пользователя 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "78409ec5-02b0-441e-bfd5-9a58e1c27a00",
+						"exec": [
+							"var responseJSON = JSON.parse(responseBody)\r",
+							"pm.collectionVariables.set(\"jwt\", responseJSON[\"jwt\"])"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\" : \"{{username2}}\",\n\t\"password\" : \"{{password2}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/signin",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение профиля пользователя 1 после входа пользователя 2",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "изменение профиля пользователя 1 после входа пользователя 2",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"lastName\" : \"{{lastName1}} changed\",\n\t\"firstName\" : \"{{firstName1}} changed\",\n\t\"middleName\" : \"{{middleName1}} changed\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/users/{{userId1}}",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"users",
+						"{{userId1}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "bce81c83-0fb2-48ec-9af7-2c04dd468994",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "2d7ec0a1-55ea-4eff-847b-bf2e2f8dd0ba",
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '')] = true;",
+					"tests[\"[INFO] Response: \" + responseBody] = true;"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "d0941395-9bae-4fcd-ba58-1f60485f3c46",
+			"key": "baseUrl",
+			"value": "172.17.58.39",
+			"type": "string"
+		},
+		{
+			"id": "bb61a0b3-6af7-4c53-94ad-a2cc3af933d2",
+			"key": "username1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "6c17b15f-dc6b-44d6-8b88-c02715da575e",
+			"key": "password1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "55c7c62a-c9b2-49e7-bb9e-8135b984f37b",
+			"key": "lastName1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "0f346aa1-d540-4064-923c-84cdace8ca87",
+			"key": "firstName1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "aef7e838-54ac-4755-9052-a23a21e1881c",
+			"key": "middleName1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "e3c5b3b3-9215-4f8f-8141-4583fb0a44d8",
+			"key": "userId1",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "16733e8f-463b-44d8-b138-ba20bdf4b8cb",
+			"key": "jwt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "1aa56b9d-5d6b-4daf-add9-666ba0b4e601",
+			"key": "firstName2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "0dac5441-6d9b-4899-8ea8-f852f3673136",
+			"key": "lastName2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "16812378-2d93-406c-ba5f-0f44fadda23d",
+			"key": "middleName2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "9fb64eef-bdcd-4e00-8b26-25e21b2b634f",
+			"key": "password2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "56a6b6cf-af29-4d65-87f5-b83332dbb39f",
+			"key": "username2",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "07ba2870-34f1-49eb-9997-f55eb2a81c49",
+			"key": "userId2",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
