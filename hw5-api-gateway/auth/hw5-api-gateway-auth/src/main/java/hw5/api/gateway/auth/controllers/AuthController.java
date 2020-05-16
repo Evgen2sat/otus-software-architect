@@ -1,8 +1,11 @@
 package hw5.api.gateway.auth.controllers;
 
+import com.nimbusds.jwt.JWTClaimsSet;
+import com.nimbusds.jwt.JWTParser;
 import io.micronaut.http.HttpHeaders;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
+import io.micronaut.http.MutableHttpResponse;
 import io.micronaut.http.annotation.Consumes;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -18,7 +21,17 @@ import io.reactivex.Single;
 public class AuthController {
 
     @Get
-    public HttpResponse<Void> auth(final HttpHeaders headers) {
-        return HttpResponse.ok();
+    public HttpResponse auth(final HttpHeaders headers) {
+        try {
+            JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+            Long userId = claimsJws.getLongClaim("id");
+
+            MutableHttpResponse<Object> response = HttpResponse.ok();
+            response.getHeaders().add("X-UserId", userId.toString());
+
+            return response;
+        } catch (Exception e) {
+            return HttpResponse.serverError(e);
+        }
     }
 }

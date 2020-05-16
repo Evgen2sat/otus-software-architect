@@ -18,7 +18,7 @@ spec:
           - name: otus-hw5-api-gateway-auth
             image: evgen2sat/otus-hw5-api-gateway-auth:1.0.0
             ports:
-              - name: web 
+              - name: web-auth 
                 containerPort: 8001
             env:
               - name: JDBC_DRIVER_CLASS_NAME

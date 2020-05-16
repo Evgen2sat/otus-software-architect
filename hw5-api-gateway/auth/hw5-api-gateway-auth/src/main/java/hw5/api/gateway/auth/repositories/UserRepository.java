@@ -40,10 +40,10 @@ public class UserRepository {
         return null;
     }
 
-    public void signUp(SignUpDto data) throws SQLException {
+    public UserDto signUp(SignUpDto data) throws SQLException {
         //добавить пользователя в БД
-        databaseService.executeInsertQueryWithId(
-                "INSERT users\n" +
+        long userId = databaseService.executeInsertQueryWithId(
+                "INSERT INTO users\n" +
                         "(username, password, last_name, first_name, middle_name)\n" +
                         "VALUES\n" +
                         "(?, ?, ?, ?, ?)",
@@ -53,6 +53,8 @@ public class UserRepository {
                 QueryParam.getString(data.getFirstName()),
                 QueryParam.getString(data.getMiddleName())
         );
+
+        return getUserById(userId);
     }
 
     public UserDto getUserByUsername(String username) throws SQLException {
@@ -63,6 +65,23 @@ public class UserRepository {
                         "   AND username = ?\n",
                 this::signInMapper,
                 QueryParam.getString(username)
+        );
+
+        if(users != null && !users.isEmpty()) {
+            return users.get(0);
+        }
+
+        return null;
+    }
+
+    public UserDto getUserById(long id) throws SQLException {
+        List<UserDto> users = databaseService.executeSelectQuery(
+                "SELECT id, username, last_name, first_name, middle_name\n" +
+                        "FROM users\n" +
+                        "WHERE deleted = FALSE\n" +
+                        "   AND id = ?\n",
+                this::signInMapper,
+                QueryParam.getLong(id)
         );
 
         if(users != null && !users.isEmpty()) {

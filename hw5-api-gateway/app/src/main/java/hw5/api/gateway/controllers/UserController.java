@@ -31,6 +31,11 @@ public class UserController {
     @Inject
     private UserRepository userRepository;
 
+//    @Get("/me")
+//    public HttpResponse me(final HttpHeaders headers) {
+//        return HttpResponse.ok(headers.get("X-UserId"));
+//    }
+
     @Put("/{id}")
     public HttpResponse update(long id, @Body UserDto user, final HttpHeaders headers) throws Exception {
         return Timer.builder("app_request_latency")
@@ -45,9 +50,11 @@ public class UserController {
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
-                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
-                        long userIdFromJwt = claimsJws.getLongClaim("id");
-                        if(userIdFromJwt != id) {
+//                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+//                        long userIdFromJwt = claimsJws.getLongClaim("id");
+                        String userIdFromJwt = headers.get("X-UserId");
+                        if(userIdFromJwt == null || userIdFromJwt.isEmpty()
+                            || Long.valueOf(userIdFromJwt) != id) {
                             return HttpResponse.status(HttpStatus.FORBIDDEN);
                         }
 
@@ -72,9 +79,11 @@ public class UserController {
                 .register(this.meterRegistry)
                 .record(() -> {
                     try {
-                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
-                        long userIdFromJwt = claimsJws.getLongClaim("id");
-                        if(userIdFromJwt != id) {
+//                        JWTClaimsSet claimsJws = JWTParser.parse(headers.getAuthorization().get().replace("Bearer", "")).getJWTClaimsSet();
+//                        long userIdFromJwt = claimsJws.getLongClaim("id");
+                        String userIdFromJwt = headers.get("X-UserId");
+                        if(userIdFromJwt == null || userIdFromJwt.isEmpty()
+                                || Long.valueOf(userIdFromJwt) != id) {
                             return HttpResponse.status(HttpStatus.FORBIDDEN);
                         }
 

@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: otus-hw5-api-gateway-auth-ingress
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - path: /auth
+        backend:
+          serviceName: otus-hw5-api-gateway-auth-service
+          servicePort: 9001
+      - path: /signin
+        backend:
+          serviceName: otus-hw5-api-gateway-auth-service
+          servicePort: 9001
+      - path: /signup
+        backend:
+          serviceName: otus-hw5-api-gateway-auth-service
+          servicePort: 9001

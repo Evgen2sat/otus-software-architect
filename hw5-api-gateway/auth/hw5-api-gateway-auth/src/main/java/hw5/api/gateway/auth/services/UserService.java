@@ -55,12 +55,12 @@ public class UserService {
 
         //регистрируем пользователя
         try {
-            userRepository.signUp(data);
+            return HttpResponse.ok(userRepository.signUp(data));
         } catch (SQLException e) {
             return HttpResponse.serverError(e);
         }
 
-        return HttpResponse.ok();
+
     }
 
     private JwtDto createJwt(UserDto data) {
