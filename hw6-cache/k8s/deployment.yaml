@@ -42,7 +42,7 @@ spec:
                         name: otus-hw6-cache-secret
                         key: JDBC_PASSWORD
               - name: CACHE_ENABLED
-                value: "1"
+                value: "0"
               - name: REDIS_HOST
                 value: "redis-master"
               - name: REDIS_PORT

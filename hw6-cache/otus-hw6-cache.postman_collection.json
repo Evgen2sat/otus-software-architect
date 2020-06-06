@@ -1,0 +1,323 @@
+{
+	"info": {
+		"_postman_id": "71b3ce0c-6303-4044-abfd-3e88a73e3789",
+		"name": "otus-hw6-cache",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "создание продукта 1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"product 1\",\n\t\"color\" : \"black\",\n\t\"price\" : 1.50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание продукта 2",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"product 2\",\n\t\"color\" : \"red\",\n\t\"price\" : 2.50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание продукта 3",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"product 3\",\n\t\"color\" : \"black\",\n\t\"price\" : 2.50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "создание продукта 4",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\" : \"product 4\",\n\t\"color\" : \"black\",\n\t\"price\" : 2.50\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение продуктов по фильтру 1",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"value": "arch.homework",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products?name=product 1",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "product 1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение продуктов по фильтру 2",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products?color=black",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "black"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "получение продуктов по фильтру 3",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"host": true
+				}
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Host",
+						"type": "text",
+						"value": "arch.homework",
+						"disabled": true
+					}
+				],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/products?color=black&price=2.50",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"products"
+					],
+					"query": [
+						{
+							"key": "color",
+							"value": "black"
+						},
+						{
+							"key": "price",
+							"value": "2.50"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "10ad67d8-8e8b-48fd-8ddc-ef5c54593069",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "60798d90-828b-4b93-98a0-e6b251159535",
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '')] = true;",
+					"tests[\"[INFO] Response: \" + responseBody] = true;"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "1a9fc972-0e59-46af-bb18-b9da9cb452fb",
+			"key": "baseUrl",
+			"value": "arch.homework",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
