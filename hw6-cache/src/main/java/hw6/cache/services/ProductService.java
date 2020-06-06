@@ -129,7 +129,7 @@ public class ProductService {
             //то добавим в кэш
             String cacheValue = new Gson().toJson(products);
             String cacheKey = getCacheKey(name, color, price);
-            jedis.set(cacheKey, cacheValue, new SetParams().ex(300));
+            jedis.set(cacheKey, cacheValue, new SetParams().ex(60));
         }
     }
 
