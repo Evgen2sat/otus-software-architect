@@ -92,9 +92,26 @@ public class ProductService {
         try {
             products = productRepository.getProducts(name, color, price);
 
-            addProductsToCache(products, name, color, price);
+            if(jedis != null) {
+                addProductsToCache(products, name, color, price);
+            }
         } catch (SQLException e) {
             return HttpResponse.serverError(e);
+        }
+
+        return HttpResponse.ok(products);
+    }
+
+    public HttpResponse cache(String name, String color, Float price) {
+        List<ProductDto> products = null;
+
+        if (jedis != null) {
+            //проверим в кэше
+            products = getProductsFromCache(name, color, price);
+
+            if (products != null && !products.isEmpty()) {
+                return HttpResponse.ok(products);
+            }
         }
 
         return HttpResponse.ok(products);

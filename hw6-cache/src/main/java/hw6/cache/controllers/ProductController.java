@@ -6,6 +6,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.*;
 
+import javax.annotation.Nullable;
 import javax.inject.Inject;
 
 @Controller("v1/products")
@@ -36,7 +37,17 @@ public class ProductController {
     }
 
     @Get
-    public HttpResponse getProducts(@QueryValue("name") String name, @QueryValue("color") String color, @QueryValue("price") Float price) {
+    public HttpResponse getProducts(@Nullable @QueryValue("name") String name,
+                                    @Nullable @QueryValue("color") String color,
+                                    @Nullable @QueryValue("price") Float price) {
         return productService.getProducts(name, color, price);
     }
+
+    @Get("/cache")
+    public HttpResponse cache(@Nullable @QueryValue("name") String name,
+                                    @Nullable @QueryValue("color") String color,
+                                    @Nullable @QueryValue("price") Float price) {
+        return productService.cache(name, color, price);
+    }
+
 }
