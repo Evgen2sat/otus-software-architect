@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: hw6-cache
+  server:
+    port: 8003

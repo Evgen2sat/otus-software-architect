@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw6.cache
+---
+testFramework: junit
+sourceLanguage: java
