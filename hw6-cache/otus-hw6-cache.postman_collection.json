@@ -8,9 +8,7 @@
 		{
 			"name": "создание продукта 1",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "POST",
@@ -49,9 +47,7 @@
 		{
 			"name": "создание продукта 2",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "POST",
@@ -90,9 +86,7 @@
 		{
 			"name": "создание продукта 3",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "POST",
@@ -131,9 +125,7 @@
 		{
 			"name": "создание продукта 4",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "POST",
@@ -172,9 +164,7 @@
 		{
 			"name": "получение продуктов по фильтру 1",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "GET",
@@ -210,9 +200,7 @@
 		{
 			"name": "получение продуктов по фильтру 2",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "GET",
@@ -248,9 +236,7 @@
 		{
 			"name": "получение продуктов по фильтру 3",
 			"protocolProfileBehavior": {
-				"disabledSystemHeaders": {
-					"host": true
-				}
+				"disabledSystemHeaders": {}
 			},
 			"request": {
 				"method": "GET",
@@ -313,7 +299,7 @@
 	],
 	"variable": [
 		{
-			"id": "1a9fc972-0e59-46af-bb18-b9da9cb452fb",
+			"id": "3a26d724-28b7-4b32-a4ef-7a40b4b076d8",
 			"key": "baseUrl",
 			"value": "arch.homework",
 			"type": "string"
