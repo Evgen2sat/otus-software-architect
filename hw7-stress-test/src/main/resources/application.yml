@@ -1,0 +1,15 @@
+micronaut:
+  application:
+    name: hw7-stress-test
+  server:
+    port: 8003
+  metrics:
+    enabled: true
+    export:
+      prometheus:
+        enabled: true
+        step: PT1M
+        descriptions: true
+endpoints:
+  prometheus:
+    sensitive: false
