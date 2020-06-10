@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: otus-hw7-stress-test-app
+  name: otus-hw7-stress-test-deployment
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: otus-hw7-stress-test-app
+    template:
+       metadata:
+          labels:
+             app: otus-hw7-stress-test-app
+       spec:
+          containers:
+          - name: otus-hw7-stress-test
+            image: evgen2sat/otus-hw7-stress-test:1.0.0
+            ports:
+              - name: web 
+                containerPort: 8003
+            env:
+              - name: JDBC_DRIVER_CLASS_NAME
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw7-stress-test-secret
+                        key: JDBC_DRIVER_CLASS_NAME
+              - name: JDBC_URL
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw7-stress-test-secret
+                        key: JDBC_URL
+              - name: JDBC_USER
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw7-stress-test-secret
+                        key: JDBC_USER
+              - name: JDBC_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw7-stress-test-secret
+                        key: JDBC_PASSWORD
+              - name: CACHE_ENABLED
+                value: "0"
+              - name: REDIS_HOST
+                value: "redis-master"
+              - name: REDIS_PORT
+                value: "6379"
+            livenessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 2
+            readinessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5

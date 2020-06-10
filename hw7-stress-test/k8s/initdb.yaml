@@ -1,0 +1,31 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: otus-hw7-stress-test-initdb
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      name: otus-hw7-stress-test-initdb
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+        image: postgres:latest
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+              create table products (id bigserial not null constraint users_pk primary key,
+                    name   text                    not null,
+                    color     text                    not null,
+                    price float                    not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                );
+            EOF
+  backoffLimit: 5

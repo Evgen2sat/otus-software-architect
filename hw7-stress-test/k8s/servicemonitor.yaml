@@ -1,0 +1,14 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    k8s-app: otus-hw7-stress-test-monitoring
+  name: otus-hw7-stress-test-monitoring
+spec:
+  selector:
+    matchLabels:
+       app: otus-hw7-stress-test-app
+  endpoints:
+  - interval: 15s
+    port: web
+    path: /prometheus
