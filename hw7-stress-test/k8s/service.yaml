@@ -6,7 +6,7 @@ metadata:
   name: otus-hw7-stress-test-service
 spec:
   selector:
-    app: otus-hw6-cache-app
+    app: otus-hw7-stress-test-app
   ports:
     - protocol: TCP
       port: 9000
