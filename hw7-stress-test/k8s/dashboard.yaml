@@ -23,7 +23,6 @@ data:
       "editable": true,
       "gnetId": null,
       "graphTooltip": 0,
-      "id": 25,
       "links": [],
       "panels": [
         {
@@ -73,10 +72,16 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{pod=\"otus-hw7-stress-test-deployment-7f6cbf9887-9smdg\"}) by (pod)",
+              "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{pod=\"otus-hw7-stress-test-deployment-7f6cbf9887-hwcls\"}) by (pod)",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
+            },
+            {
+              "expr": "sum(node_namespace_pod_container:container_cpu_usage_seconds_total:sum_rate{pod=\"postgres-statefulset-0\"}) by (pod)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "B"
             }
           ],
           "thresholds": [],
@@ -167,10 +172,16 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(container_memory_working_set_bytes{container!=\"\", pod=\"otus-hw7-stress-test-deployment-7f6cbf9887-9smdg\"}) by (pod)",
+              "expr": "sum(container_memory_working_set_bytes{container!=\"\", pod=\"otus-hw7-stress-test-deployment-7f6cbf9887-hwcls\"}) by (pod)",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
+            },
+            {
+              "expr": "sum(container_memory_working_set_bytes{container!=\"\", pod=\"postgres-statefulset-0\"}) by (pod)",
+              "interval": "",
+              "legendFormat": "",
+              "refId": "B"
             }
           ],
           "thresholds": [],
@@ -296,7 +307,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (uri) (rate(http_server_requests_seconds_count{status=\"500\"}[1m]))",
+              "expr": "sum(increase(nginx_ingress_controller_request_duration_seconds_count{status=~\"5.+\"}[1m]))",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -314,7 +325,7 @@ data:
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "ERROR RATE BY ENDPOINTS",
+          "title": "ERROR",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -433,28 +444,10 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "histogram_quantile(0.5,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
+              "expr": "histogram_quantile(0.9, sum by (le) (rate(nginx_ingress_controller_request_duration_seconds_bucket[2m]))) * 1000",
               "interval": "",
               "legendFormat": "",
               "refId": "B"
-            },
-            {
-              "expr": "histogram_quantile(0.95,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
-              "interval": "",
-              "legendFormat": "",
-              "refId": "C"
-            },
-            {
-              "expr": "histogram_quantile(0.99,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
-              "interval": "",
-              "legendFormat": "",
-              "refId": "D"
-            },
-            {
-              "expr": "histogram_quantile(1,\r\nsum by (le, exported_endpoint)\r\n(rate(app_request_latency_seconds_bucket[1m]))\r\n) * 1000",
-              "interval": "",
-              "legendFormat": "",
-              "refId": "A"
             }
           ],
           "thresholds": [
@@ -470,7 +463,7 @@ data:
           "timeFrom": null,
           "timeRegions": [],
           "timeShift": null,
-          "title": "LATENCY BY ENDPOINTS (0.5, 0.95, 0.99. 1)",
+          "title": "LATENCY",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -554,7 +547,7 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum by (uri) (rate(http_server_requests_seconds_count[1m]))",
+              "expr": "sum by (status) (rate(nginx_ingress_controller_request_duration_seconds_count[1m]))",
               "interval": "",
               "legendFormat": "",
               "refId": "A"
@@ -602,6 +595,7 @@ data:
           }
         }
       ],
+      "refresh": false,
       "schemaVersion": 25,
       "style": "dark",
       "tags": [],
@@ -609,7 +603,7 @@ data:
         "list": []
       },
       "time": {
-        "from": "now-6h",
+        "from": "now-30m",
         "to": "now"
       },
       "timepicker": {
@@ -628,5 +622,5 @@ data:
       "timezone": "",
       "title": "otus-hw7-stress-test",
       "uid": "iMa-YdeWk",
-      "version": 4
+      "version": 1
     }
