@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: otus-hw9-api-initdb
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      name: otus-hw9-api-initdb
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+        image: postgres:latest
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+              create table orders (id bigserial not null constraint users_pk primary key,
+                    product_id   bigint                    not null,
+                    user_id     bigint                    not null,
+                    product_count int                    not null,
+                    uuid text                    not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                );
+            EOF
+  backoffLimit: 5

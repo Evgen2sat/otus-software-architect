@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: hw9-api
+  server:
+    port: 8003

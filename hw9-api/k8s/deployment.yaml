@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: otus-hw9-api-app
+  name: otus-hw9-api-deployment
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: otus-hw9-api-app
+    template:
+       metadata:
+          labels:
+             app: otus-hw9-api-app
+       spec:
+          containers:
+          - name: otus-hw9-api
+            image: evgen2sat/otus-hw9-api:1.0.0
+            ports:
+              - name: web 
+                containerPort: 8003
+            env:
+              - name: JDBC_DRIVER_CLASS_NAME
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw9-api-secret
+                        key: JDBC_DRIVER_CLASS_NAME
+              - name: JDBC_URL
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw9-api-secret
+                        key: JDBC_URL
+              - name: JDBC_USER
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw9-api-secret
+                        key: JDBC_USER
+              - name: JDBC_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw9-api-secret
+                        key: JDBC_PASSWORD
+            livenessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 2
+            readinessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5

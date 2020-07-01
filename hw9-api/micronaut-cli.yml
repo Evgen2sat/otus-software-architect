@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw9.api
+---
+testFramework: junit
+sourceLanguage: java
