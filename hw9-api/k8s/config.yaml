@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: otus-hw9-api
+  name: otus-hw9-api-secret
 type: Opaque
 data:
   JDBC_DRIVER_CLASS_NAME: b3JnLnBvc3RncmVzcWwuRHJpdmVy

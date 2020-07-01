@@ -16,7 +16,7 @@ spec:
        spec:
           containers:
           - name: otus-hw9-api
-            image: evgen2sat/otus-hw9-api:1.0.0
+            image: evgen2sat/otus-hw9-api:1.0.1
             ports:
               - name: web 
                 containerPort: 8003
