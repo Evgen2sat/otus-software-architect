@@ -31,7 +31,7 @@ public class OrderService {
                 orderRepository.createOrder(data, orderUuid);
             } else {
                 //иначе вернуть конфликт
-                HttpResponse.status(HttpStatus.CONFLICT);
+                return HttpResponse.status(HttpStatus.CONFLICT);
             }
 
             return getOrderUuid();
