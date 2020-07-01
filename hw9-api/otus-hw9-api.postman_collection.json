@@ -1,0 +1,244 @@
+{
+	"info": {
+		"_postman_id": "b9800462-37b6-4d02-a71d-22f4160458bc",
+		"name": "otus-hw9-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Получить uuid на создание заказа",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f862883f-05a6-40ce-bf4b-b3968b9e9910",
+						"exec": [
+							"pm.collectionVariables.set(\"old-order-uuid\", postman.getResponseHeader(\"X-OrderUUID\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать заказ с полученным UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "35e2a125-bc9b-4428-ab19-4c962e7ae271",
+						"exec": [
+							"var orderUuid = null;\r",
+							"pm.test(\"X-OrderUUID is present\", function () {\r",
+							"    orderUuid = pm.response.headers.get(\"X-OrderUUID\");\r",
+							"    if (orderUuid !== undefined) {\r",
+							"        pm.collectionVariables.set(\"new-order-uuid\", orderUuid)\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OrderUUID",
+						"value": "{{old-order-uuid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\" : 1,\r\n    \"userId\" : 1,\r\n    \"productCount\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать заказ со старым UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "7ced23be-e98c-46a5-af1d-9d2b56369d12",
+						"exec": [
+							"var orderUuid = null;\r",
+							"pm.test(\"X-OrderUUID is present\", function () {\r",
+							"    orderUuid = pm.response.headers.get(\"X-OrderUUID\");\r",
+							"    if (orderUuid !== undefined) {\r",
+							"        pm.collectionVariables.set(\"new-order-uuid\", orderUuid)\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OrderUUID",
+						"value": "{{old-order-uuid}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\" : 1,\r\n    \"userId\" : 1,\r\n    \"productCount\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Создать заказ с новым UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d0dab3f7-b883-4316-9983-201bb86f49dd",
+						"exec": [
+							"var orderUuid = null;\r",
+							"pm.test(\"X-OrderUUID is present\", function () {\r",
+							"    orderUuid = pm.response.headers.get(\"X-OrderUUID\");\r",
+							"    if (orderUuid !== undefined) {\r",
+							"        pm.collectionVariables.set(\"new-order-uuid\", orderUuid)\r",
+							"    }\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-OrderUUID",
+						"type": "text",
+						"value": "{{new-order-uuid}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"productId\" : 1,\r\n    \"userId\" : 1,\r\n    \"productCount\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{baseUrl}}/otusapp/v1/orders",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"otusapp",
+						"v1",
+						"orders"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "d7d01400-e60f-49f9-94cd-c46ee5530d01",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "69f63df8-4494-4df9-bca9-95a2b3509414",
+				"type": "text/javascript",
+				"exec": [
+					"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '')] = true;",
+					"tests[\"[INFO] Response: \" + responseBody] = true;"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "03a0d006-49ea-455e-9f55-6a77277f3e00",
+			"key": "baseUrl",
+			"value": "arch.homework",
+			"type": "string"
+		},
+		{
+			"id": "58555c34-7a9d-4990-abee-bac8c6a7a392",
+			"key": "old-order-uuid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"id": "468ff009-eef4-4500-89c3-e1f2aecfa138",
+			"key": "new-order-uuid",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
