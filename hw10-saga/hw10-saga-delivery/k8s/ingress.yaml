@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: otus-hw10-saga-delivery-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - path: /delivery(/|$)(.*)
+        backend:
+          serviceName: otus-hw10-saga-delivery-service
+          servicePort: 9003

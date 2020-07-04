@@ -54,7 +54,10 @@ public class OrderService {
     public HttpResponse getOrderUuid(OrderResponseDto orderSaga) {
         MutableHttpResponse<Object> response = HttpResponse.ok();
         response.getHeaders().add("X-OrderUUID", generateOrderUuid());
-        response.body(orderSaga);
+
+        if(orderSaga != null) {
+            response.body(orderSaga);
+        }
 
         return response;
     }

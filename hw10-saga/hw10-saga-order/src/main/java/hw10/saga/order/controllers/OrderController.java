@@ -22,6 +22,6 @@ public class OrderController {
 
     @Get
     public HttpResponse getOrderUuid() {
-        return orderService.getOrderUuid();
+        return orderService.getOrderUuid(null);
     }
 }

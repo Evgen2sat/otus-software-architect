@@ -9,7 +9,7 @@ spec:
     app: otus-hw10-saga-app
   ports:
     - protocol: TCP
-      port: 9000
+      port: 9001
       targetPort: web 
       name: web
   type: NodePort
