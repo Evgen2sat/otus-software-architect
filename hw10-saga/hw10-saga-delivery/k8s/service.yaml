@@ -10,6 +10,6 @@ spec:
   ports:
     - protocol: TCP
       port: 9003
-      targetPort: web 
-      name: web
+      targetPort: web-delivery
+      name: web-delivery
   type: NodePort

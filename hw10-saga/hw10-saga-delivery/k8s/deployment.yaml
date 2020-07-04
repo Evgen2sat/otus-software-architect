@@ -18,7 +18,7 @@ spec:
           - name: otus-hw10-saga-delivery
             image: evgen2sat/otus-hw10-saga-delivery:1.0.0
             ports:
-              - name: web 
+              - name: web-delivery
                 containerPort: 8006
             env:
               - name: JDBC_DRIVER_CLASS_NAME

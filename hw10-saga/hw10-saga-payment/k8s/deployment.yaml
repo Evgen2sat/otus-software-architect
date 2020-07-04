@@ -18,7 +18,7 @@ spec:
           - name: otus-hw10-saga-payment
             image: evgen2sat/otus-hw10-saga-payment:1.0.0
             ports:
-              - name: web 
+              - name: web-payment
                 containerPort: 8004
             env:
               - name: JDBC_DRIVER_CLASS_NAME

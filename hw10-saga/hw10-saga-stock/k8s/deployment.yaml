@@ -18,7 +18,7 @@ spec:
           - name: otus-hw10-saga-stock
             image: evgen2sat/otus-hw10-saga-stock:1.0.0
             ports:
-              - name: web 
+              - name: web-stock
                 containerPort: 8005
             env:
               - name: JDBC_DRIVER_CLASS_NAME

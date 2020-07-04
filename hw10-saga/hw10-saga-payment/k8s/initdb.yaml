@@ -20,7 +20,7 @@ spec:
           - "-c"
           - |
             psql $DATABASE_URI <<'EOF'
-              create table payments (id bigserial not null constraint users_pk primary key,
+              create table payments (id bigserial not null constraint payments_pk primary key,
                     order_id   bigint                    not null,
                     summ float not null,
                     created_date  timestamp default now() not null,

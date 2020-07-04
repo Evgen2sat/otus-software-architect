@@ -42,11 +42,11 @@ spec:
                         name: otus-hw10-saga-order-secret
                         key: JDBC_PASSWORD
               - name: delivery_uri
-                value: "http://otus-hw10-saga-delivery-service/"
+                value: "http://otus-hw10-saga-delivery-service.default.svc.cluster.local:9003/"
               - name: payment_uri
-                value: "http://otus-hw10-saga-payment-service/"
+                value: "http://otus-hw10-saga-payment-service.default.svc.cluster.local:9001/"
               - name: stock_uri
-                value: "http://otus-hw10-saga-stock-service/"
+                value: "http://otus-hw10-saga-stock-service.default.svc.cluster.local:9002/"
             livenessProbe:
               httpGet:
                 port: 8003

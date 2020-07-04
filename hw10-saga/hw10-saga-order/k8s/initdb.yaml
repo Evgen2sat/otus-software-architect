@@ -20,7 +20,7 @@ spec:
           - "-c"
           - |
             psql $DATABASE_URI <<'EOF'
-              create table orders (id bigserial not null constraint users_pk primary key,
+              create table orders (id bigserial not null constraint orders_pk primary key,
                     product_id   bigint                    not null,
                     user_id     bigint                    not null,
                     product_count int                    not null,
