@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw10.saga.stock
+---
+testFramework: junit
+sourceLanguage: java
