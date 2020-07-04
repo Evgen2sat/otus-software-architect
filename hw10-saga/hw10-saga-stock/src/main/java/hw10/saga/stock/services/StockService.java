@@ -15,8 +15,8 @@ public class StockService {
 
     public HttpResponse reserveProducts(ReserveProductsRequestDto data) {
         try {
-            long paymentId = stockRepository.reserveProducts(data);
-            return HttpResponse.ok(paymentId);
+            long reserveId = stockRepository.reserveProducts(data);
+            return HttpResponse.ok(reserveId);
         } catch (Exception e) {
             ErrorDto errorDto = new ErrorDto();
             errorDto.setMessage(e.getMessage());
