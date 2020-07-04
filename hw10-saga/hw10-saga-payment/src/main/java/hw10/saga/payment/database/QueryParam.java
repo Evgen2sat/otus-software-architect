@@ -68,4 +68,8 @@ public class QueryParam {
     public static QueryParam getBoolean(boolean value) {
         return new QueryParam(Types.BOOLEAN, value);
     }
+
+    public static QueryParam getFloat(float value) {
+        return new QueryParam(Types.FLOAT, value);
+    }
 }
