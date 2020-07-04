@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: otus-hw10-saga-order-app
+  name: otus-hw10-saga-order-deployment
+spec:
+    replicas: 1
+    selector:
+       matchLabels:
+          app: otus-hw10-saga-app
+    template:
+       metadata:
+          labels:
+             app: otus-hw10-saga-app
+       spec:
+          containers:
+          - name: otus-hw10-saga-order
+            image: evgen2sat/otus-hw10-saga-order:1.0.0
+            ports:
+              - name: web 
+                containerPort: 8003
+            env:
+              - name: JDBC_DRIVER_CLASS_NAME
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw10-saga-order-secret
+                        key: JDBC_DRIVER_CLASS_NAME
+              - name: JDBC_URL
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw10-saga-order-secret
+                        key: JDBC_URL
+              - name: JDBC_USER
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw10-saga-order-secret
+                        key: JDBC_USER
+              - name: JDBC_PASSWORD
+                valueFrom:
+                    secretKeyRef:
+                        name: otus-hw10-saga-order-secret
+                        key: JDBC_PASSWORD
+              - name: delivery_uri
+                value: "http://otus-hw10-saga-delivery-service/"
+              - name: payment_uri
+                value: "http://otus-hw10-saga-payment-service/"
+              - name: stock_uri
+                value: "http://otus-hw10-saga-stock-service/"
+            livenessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5
+              timeoutSeconds: 2
+            readinessProbe:
+              httpGet:
+                port: 8003
+                path: /health
+              initialDelaySeconds: 10
+              periodSeconds: 5

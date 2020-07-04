@@ -40,7 +40,7 @@ public class StockService {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(System.getenv("stock.uri"))
+                .baseUrl(System.getenv("stock_uri"))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();

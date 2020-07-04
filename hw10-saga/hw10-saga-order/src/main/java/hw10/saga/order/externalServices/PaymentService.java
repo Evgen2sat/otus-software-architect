@@ -42,7 +42,7 @@ public class PaymentService {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(System.getenv("payment.uri"))
+                .baseUrl(System.getenv("payment_uri"))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();

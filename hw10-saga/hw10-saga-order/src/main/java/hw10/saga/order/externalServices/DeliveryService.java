@@ -41,7 +41,7 @@ public class DeliveryService {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(System.getenv("delivery.uri"))
+                .baseUrl(System.getenv("delivery_uri"))
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(okHttpClient)
                 .build();
