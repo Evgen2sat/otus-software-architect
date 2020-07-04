@@ -15,6 +15,12 @@ public class DeliveryService {
 
     public HttpResponse reserveCourier(ReserveCourierRequestDto data) {
         try {
+            if (data.getOrderId() % 4 == 0) {
+                ErrorDto errorDto = new ErrorDto();
+                errorDto.setMessage("Имитируем, что произошла ошибка в резервировании курьера");
+                return HttpResponse.serverError(errorDto);
+            }
+
             long reserveId = deliveryRepository.reserveCourier(data);
             return HttpResponse.ok(reserveId);
         } catch (Exception e) {

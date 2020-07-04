@@ -15,6 +15,12 @@ public class StockService {
 
     public HttpResponse reserveProducts(ReserveProductsRequestDto data) {
         try {
+            if (data.getOrderId() % 3 == 0) {
+                ErrorDto errorDto = new ErrorDto();
+                errorDto.setMessage("Имитируем, что произошла ошибка в резервировании товара");
+                return HttpResponse.serverError(errorDto);
+            }
+
             long reserveId = stockRepository.reserveProducts(data);
             return HttpResponse.ok(reserveId);
         } catch (Exception e) {

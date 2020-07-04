@@ -15,6 +15,12 @@ public class PaymentService {
 
     public HttpResponse sendPayment(SendPaymentRequestDto data) {
         try {
+            if (data.getOrderId() % 2 == 0) {
+                ErrorDto errorDto = new ErrorDto();
+                errorDto.setMessage("Имитируем, что произошла ошибка в оплате");
+                return HttpResponse.serverError(errorDto);
+            }
+
             long paymentId = paymentRepository.sendPayment(data);
             return HttpResponse.ok(paymentId);
         } catch (Exception e) {
