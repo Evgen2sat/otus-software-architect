@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: otus-hw10-saga-stock-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  rules:
+  - host: arch.homework
+    http:
+      paths:
+      - path: /stock(/|$)(.*)
+        backend:
+          serviceName: otus-hw10-saga-stock-service
+          servicePort: 9002

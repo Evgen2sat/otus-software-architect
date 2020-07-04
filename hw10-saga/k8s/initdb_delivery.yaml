@@ -1,0 +1,30 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: otus-hw10-saga-delivery-initdb
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      name: otus-hw10-saga-delivery-initdb
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+        image: postgres:latest
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+              create table deliveries (id bigserial not null constraint deliveries_pk primary key,
+                    order_id   bigint                    not null,
+                    delivery_date_time timestamp not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                );
+            EOF
+  backoffLimit: 5
