@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-category-2
+  labels:
+    app: postgres-category-2
+spec:
+  type: NodePort
+  ports:
+   - port: 7432
+  selector:
+    app: postgres-category-2
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres-category-2-statefulset
+spec:
+  serviceName: "postgres-category-2"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres-category-2
+  template:
+    metadata:
+      labels:
+        app: postgres-category-2
+    spec:
+      containers:
+      - name: postgres-category-2
+        image: postgres:latest
+        ports:
+        - containerPort: 5432
+          name: postgredb-category-2
+        env:
+          - name: POSTGRES_DB
+            value: products-2
+          - name: POSTGRES_USER
+            value: myuser
+          - name: POSTGRES_PASSWORD
+            value: passwd
+        volumeMounts:
+        - name: postgredb-category-2
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres-category-2
+  volumeClaimTemplates:
+  - metadata:
+      name: postgredb-category-2
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: standard
+      resources:
+        requests:
+          storage: 1Gi

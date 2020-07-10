@@ -1,19 +1,19 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: otus-hw11-sharding-initdb
+  name: otus-hw11-sharding-initdb-category-2
 spec:
   activeDeadlineSeconds: 120
   template:
     metadata:
-      name: otus-hw11-sharding-initdb
+      name: otus-hw11-sharding-initdb-category-2
     spec:
       restartPolicy: OnFailure
       containers:
       - name: post-install-job
         env:
           - name: DATABASE_URI
-            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+            value: "postgresql://myuser:passwd@products-2:7432/products-2"
         image: postgres:latest
         command:
           - sh
@@ -24,7 +24,7 @@ spec:
                     name   text                    not null,
                     color     text                    not null,
                     price float                    not null,
-                    category_id bigint                    not null,
+                    category_id bigint                    not null CONSTRAINT category_id_check CHECK (category_id = 2),
                     created_date  timestamp default now() not null,
                     deleted boolean default false not null
                 );

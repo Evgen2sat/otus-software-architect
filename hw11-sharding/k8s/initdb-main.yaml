@@ -1,0 +1,91 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: otus-hw11-sharding-initdb-main
+spec:
+  activeDeadlineSeconds: 120
+  template:
+    metadata:
+      name: otus-hw11-sharding-initdb-main
+    spec:
+      restartPolicy: OnFailure
+      containers:
+      - name: post-install-job
+        env:
+          - name: DATABASE_URI
+            value: "postgresql://myuser:passwd@postgres:5432/myapp"
+        image: postgres:latest
+        command:
+          - sh
+          - "-c"
+          - |
+            psql $DATABASE_URI <<'EOF'
+            
+              CREATE EXTENSION postgres_fdw;
+
+              CREATE SERVER products_1_server
+              FOREIGN DATA WRAPPER postgres_fdw
+              OPTIONS (host 'products-1', port '6432', dbname 'products-1');
+              
+              CREATE USER MAPPING FOR postgres
+              SERVER products_1_server
+              OPTIONS (user 'myuser', password 'passwd');
+              
+              create foreign table products-1 (id bigserial not null constraint products_pk primary key,
+                    name   text                    not null,
+                    color     text                    not null,
+                    price float                    not null,
+                    category_id bigint                    not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                )
+              SERVER products_1_server
+              OPTIONS (schema_name 'public', table_name 'products');
+              
+              
+              
+              CREATE SERVER products_2_server
+              FOREIGN DATA WRAPPER postgres_fdw
+              OPTIONS (host 'products-2', port '7432', dbname 'products-2');
+              
+              CREATE USER MAPPING FOR postgres
+              SERVER products_2_server
+              OPTIONS (user 'myuser', password 'passwd');
+              
+              create foreign table products-2 (id bigserial not null constraint products_pk primary key,
+                    name   text                    not null,
+                    color     text                    not null,
+                    price float                    not null,
+                    category_id bigint                    not null,
+                    created_date  timestamp default now() not null,
+                    deleted boolean default false not null
+                )
+              SERVER products_2_server
+              OPTIONS (schema_name 'public', table_name 'products');
+              
+              
+              
+              CREATE VIEW products AS
+                SELECT * FROM products-1
+                    UNION ALL
+                SELECT * FROM products-2;
+
+
+              CREATE RULE products_insert AS ON INSERT TO products
+              DO INSTEAD NOTHING;
+              
+              CREATE RULE products_update AS ON UPDATE TO products
+              DO INSTEAD NOTHING;
+              
+              CREATE RULE products_delete AS ON DELETE TO products
+              DO INSTEAD NOTHING;
+              
+              CREATE RULE products_insert_to_1 AS ON INSERT TO products
+                WHERE (category_id = 1)
+              DO INSTEAD INSERT INTO products-1 VALUES (NEW.*);
+              
+              CREATE RULE products_insert_to_2 AS ON INSERT TO products
+                WHERE (category_id = 2)
+              DO INSTEAD INSERT INTO products-2 VALUES (NEW.*);
+            EOF
+  backoffLimit: 5
