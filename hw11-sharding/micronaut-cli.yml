@@ -1,0 +1,5 @@
+profile: service
+defaultPackage: hw11.sharding
+---
+testFramework: junit
+sourceLanguage: java

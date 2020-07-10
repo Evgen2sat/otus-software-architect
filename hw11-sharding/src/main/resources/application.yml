@@ -1,0 +1,5 @@
+micronaut:
+  application:
+    name: hw11-sharding
+  server:
+    port: 8003
