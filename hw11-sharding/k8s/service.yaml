@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: otus-hw11-sharding-app
+  name: otus-hw11-sharding-service
+spec:
+  selector:
+    app: otus-hw11-sharding-app
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: web 
+      name: web
+  type: NodePort
