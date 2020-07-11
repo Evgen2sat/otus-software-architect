@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: otus-hw11-sharding-initdb-main
 spec:
-  activeDeadlineSeconds: 120
+  activeDeadlineSeconds: 360
   template:
     metadata:
       name: otus-hw11-sharding-initdb-main
@@ -21,6 +21,9 @@ spec:
           - |
             psql $DATABASE_URI <<'EOF'
             
+              CREATE SEQUENCE products_1_id_seq;
+              CREATE SEQUENCE products_2_id_seq;
+            
               CREATE EXTENSION postgres_fdw;
 
               CREATE SERVER products_1_server
@@ -31,7 +34,7 @@ spec:
               SERVER products_1_server
               OPTIONS (user 'myuser', password 'passwd');
               
-              create foreign table products_1 (id bigint not null,
+              create foreign table products_1 (id bigint NOT NULL DEFAULT nextval('products_1_id_seq'),
                     name   text                    not null,
                     color     text                    not null,
                     price float                    not null,
@@ -52,7 +55,7 @@ spec:
               SERVER products_2_server
               OPTIONS (user 'myuser', password 'passwd');
               
-              create foreign table products_2 (id bigint not null,
+              create foreign table products_2 (id bigint NOT NULL DEFAULT nextval('products_1_id_seq'),
                     name   text                    not null,
                     color     text                    not null,
                     price float                    not null,
@@ -88,4 +91,4 @@ spec:
                 WHERE (category_id = 2)
               DO INSTEAD INSERT INTO products_2 VALUES (NEW.*);
             EOF
-  backoffLimit: 5
+  backoffLimit: 20

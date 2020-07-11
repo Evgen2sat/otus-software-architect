@@ -32,19 +32,19 @@ public class ProductRepository {
         return null;
     }
 
-    public ProductDto createProduct(ProductDto data) throws SQLException {
-        long productId = databaseService.executeInsertQueryWithId(
+    public void createProduct(ProductDto data) throws SQLException {
+        long productId = databaseService.executeInsertQuery(
                 "INSERT INTO products\n" +
-                        "(name, color, price, category_id)\n" +
+                        "(id, name, color, price, category_id, created_date, deleted)\n" +
                         "VALUES\n" +
-                        "(?, ?, ?, ?)",
+                        "((SELECT nextval('products_1_id_seq')), ?, ?, ?, ?, now(), false)",
                 QueryParam.getString(data.getName()),
                 QueryParam.getString(data.getColor()),
                 QueryParam.getFloat(data.getPrice()),
                 QueryParam.getLong(data.getCategoryId())
         );
 
-        return getProduct(productId);
+//        return getProduct(productId);
     }
 
     public ProductDto updateProduct(long id, ProductDto data) throws SQLException {

@@ -16,7 +16,7 @@ spec:
        spec:
           containers:
           - name: otus-hw6-cache
-            image: evgen2sat/otus-hw11-sharding:1.0.0
+            image: evgen2sat/otus-hw11-sharding:1.0.4
             ports:
               - name: web 
                 containerPort: 8003

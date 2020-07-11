@@ -33,12 +33,13 @@ public class ProductService {
     public HttpResponse createProduct(ProductDto data) {
         ProductDto productDto = null;
         try {
-            productDto = productRepository.createProduct(data);
+            /*productDto =*/ productRepository.createProduct(data);
         } catch (SQLException e) {
             return HttpResponse.serverError(e);
         }
 
-        return HttpResponse.ok(productDto);
+//        return HttpResponse.ok(productDto);
+        return HttpResponse.ok();
     }
 
     public HttpResponse updateProduct(long id, ProductDto data) {
