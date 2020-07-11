@@ -25,7 +25,7 @@ spec:
 
               CREATE SERVER products_1_server
               FOREIGN DATA WRAPPER postgres_fdw
-              OPTIONS (host 'postgres-1', port '5432', dbname 'products_1');
+              OPTIONS (host 'postgres-1', port '5432', dbname 'products-1');
               
               CREATE USER MAPPING FOR myuser
               SERVER products_1_server
@@ -46,7 +46,7 @@ spec:
               
               CREATE SERVER products_2_server
               FOREIGN DATA WRAPPER postgres_fdw
-              OPTIONS (host 'postgres-2', port '5432', dbname 'products_2');
+              OPTIONS (host 'postgres-2', port '5432', dbname 'products-2');
               
               CREATE USER MAPPING FOR myuser
               SERVER products_2_server
