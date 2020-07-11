@@ -10,10 +10,10 @@ spec:
     spec:
       restartPolicy: OnFailure
       containers:
-      - name: post-install-job
+      - name: post-install-job-2
         env:
           - name: DATABASE_URI
-            value: "postgresql://myuser:passwd@products-2:7432/products-2"
+            value: "postgresql://myuser:passwd@postgres-2:5432/products-2"
         image: postgres:latest
         command:
           - sh

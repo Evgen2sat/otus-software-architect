@@ -25,13 +25,13 @@ spec:
 
               CREATE SERVER products_1_server
               FOREIGN DATA WRAPPER postgres_fdw
-              OPTIONS (host 'products-1', port '6432', dbname 'products-1');
+              OPTIONS (host 'postgres-1', port '5432', dbname 'products_1');
               
-              CREATE USER MAPPING FOR postgres
+              CREATE USER MAPPING FOR myuser
               SERVER products_1_server
               OPTIONS (user 'myuser', password 'passwd');
               
-              create foreign table products-1 (id bigserial not null constraint products_pk primary key,
+              create foreign table products_1 (id bigint not null,
                     name   text                    not null,
                     color     text                    not null,
                     price float                    not null,
@@ -46,13 +46,13 @@ spec:
               
               CREATE SERVER products_2_server
               FOREIGN DATA WRAPPER postgres_fdw
-              OPTIONS (host 'products-2', port '7432', dbname 'products-2');
+              OPTIONS (host 'postgres-2', port '5432', dbname 'products_2');
               
-              CREATE USER MAPPING FOR postgres
+              CREATE USER MAPPING FOR myuser
               SERVER products_2_server
               OPTIONS (user 'myuser', password 'passwd');
               
-              create foreign table products-2 (id bigserial not null constraint products_pk primary key,
+              create foreign table products_2 (id bigint not null,
                     name   text                    not null,
                     color     text                    not null,
                     price float                    not null,
@@ -66,9 +66,9 @@ spec:
               
               
               CREATE VIEW products AS
-                SELECT * FROM products-1
+                SELECT * FROM products_1
                     UNION ALL
-                SELECT * FROM products-2;
+                SELECT * FROM products_2;
 
 
               CREATE RULE products_insert AS ON INSERT TO products
@@ -82,10 +82,10 @@ spec:
               
               CREATE RULE products_insert_to_1 AS ON INSERT TO products
                 WHERE (category_id = 1)
-              DO INSTEAD INSERT INTO products-1 VALUES (NEW.*);
+              DO INSTEAD INSERT INTO products_1 VALUES (NEW.*);
               
               CREATE RULE products_insert_to_2 AS ON INSERT TO products
                 WHERE (category_id = 2)
-              DO INSTEAD INSERT INTO products-2 VALUES (NEW.*);
+              DO INSTEAD INSERT INTO products_2 VALUES (NEW.*);
             EOF
   backoffLimit: 5
